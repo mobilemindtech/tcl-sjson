@@ -1,5 +1,12 @@
 # TCL Simple JSON
 
+### Doc
+
+
+* `encode {dict or val}` - Encode dict or value. Use `-tpl` to set template
+* `encode-list {list}` - Encode list. Use `-tpl` to set template
+* `decode {string}` - Decode dict or list
+
 ### Encode dict
 
 ```tcl
@@ -89,5 +96,6 @@ set tpl {
 ### Decode
 
 ```
-::sjson::decode {{"x": 1}}
+::sjson::decode {{"x": 1}} == {x 1}
+::sjson::decode {[{"x": 1},{"y": 2}]} == [list {x 1} {y 2}]
 ```

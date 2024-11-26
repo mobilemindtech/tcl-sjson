@@ -1,0 +1,166 @@
+package require tcltest
+
+namespace import ::tcltest::*
+
+source ../sjson.tcl
+
+namespace import ::sjson::*
+
+test json_encode {} -body {
+    
+    set data {
+        id 1
+        name {Ricardo Bocchi}
+        age 37
+        enabled true
+        group {
+            id 1
+            description {Developer}
+        }
+        friends {
+            {id 1 name jonh}
+            {id 2 name jully}
+            {id 3 name fred}
+        }
+    }
+
+    set tpl {
+        id int
+        name str
+        age str
+        enabled bool
+        group {
+            dict {id int description str}
+        }
+        friends {
+            list {id int name str}
+        }
+    }
+
+    encode $data -tpl $tpl
+
+} -result {{
+    "id"      : 1,
+    "name"    : "Ricardo Bocchi",
+    "age"     : "37",
+    "enabled" : true,
+    "group"   : {
+        "id"          : 1,
+        "description" : "Developer"
+    },
+    "friends" : [{
+        "id"   : 1,
+        "name" : "jonh"
+    },{
+        "id"   : 2,
+        "name" : "jully"
+    },{
+        "id"   : 3,
+        "name" : "fred"
+    }]
+}}
+
+test json_encode_list {} -body {
+    
+    set data {
+        {
+            id 1
+            name {Ricardo Bocchi}
+            age 37
+            enabled true
+            group {
+                id 1
+                description {Developer}
+            }
+            friends {
+                {id 1 name jonh}
+                {id 2 name jully}
+                {id 3 name fred}
+            }
+        }
+        {
+            id 2
+            name {Jones Manoel}
+            age 26
+            enabled true
+            group {
+                id 1
+                description {Developer}
+            }
+            friends {
+                {id 1 name jonh}
+                {id 2 name jully}
+                {id 3 name fred}
+            }
+        }
+    }
+
+    set tpl {
+        id int
+        name str
+        age str
+        enabled bool
+        group {
+            dict {id int description str}
+        }
+        friends {
+            list {id int name str}
+        }        
+    }
+
+    encode-list $data -tpl $tpl
+
+} -result {[{
+    "id"      : 1,
+    "name"    : "Ricardo Bocchi",
+    "age"     : "37",
+    "enabled" : true,
+    "group"   : {
+        "id"          : 1,
+        "description" : "Developer"
+    },
+    "friends" : [{
+        "id"   : 1,
+        "name" : "jonh"
+    },{
+        "id"   : 2,
+        "name" : "jully"
+    },{
+        "id"   : 3,
+        "name" : "fred"
+    }]
+},{
+    "id"      : 2,
+    "name"    : "Jones Manoel",
+    "age"     : "26",
+    "enabled" : true,
+    "group"   : {
+        "id"          : 1,
+        "description" : "Developer"
+    },
+    "friends" : [{
+        "id"   : 1,
+        "name" : "jonh"
+    },{
+        "id"   : 2,
+        "name" : "jully"
+    },{
+        "id"   : 3,
+        "name" : "fred"
+    }]
+}]}
+
+
+test json_decode {} -body {
+
+    decode {{"id": 1, "name": "ricardo"}}
+
+} -result {id 1 name ricardo}
+
+test json_decode_list {} -body {
+
+    decode {[{"id": 1, "name": "ricardo"},{"id": 2, "name": "jonh"}]}
+
+} -result [list {id 1 name ricardo} {id 2 name jonh}]
+
+cleanupTests
