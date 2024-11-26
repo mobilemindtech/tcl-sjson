@@ -4,13 +4,16 @@ package require json::write
 
 namespace eval ::sjson {
 
-  namespace export encode encode-list decode
-
+  namespace export encode encode-list encode-val decode
 
   # @param value dict
   # @param args -tpl tpl or -type type
   proc encode {value args} {
     tcl2json $value {*}$args -type dict
+  }
+
+  proc encode-val {value args} {
+    tcl2json $value {*}$args
   }
 
   proc encode-list {value args} {

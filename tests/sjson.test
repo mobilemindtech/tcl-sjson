@@ -150,6 +150,27 @@ test json_encode_list {} -body {
     }]
 }]}
 
+test json_encode_value_int {} -body {
+    encode-val 1
+} -result 1
+
+test json_encode_value_string {} -body {
+    encode-val str
+} -result {"str"}
+
+test json_encode_value_string {} -body {
+    encode-val "1" -type string
+} -result {"1"}
+
+test json_encode_value_bool {} -body {
+    encode-val true
+} -result true
+
+
+test json_encode_value_bool_str {} -body {
+    encode-val "true" -type string
+} -result {"true"}
+
 
 test json_decode {} -body {
 
