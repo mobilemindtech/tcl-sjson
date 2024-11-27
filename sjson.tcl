@@ -1,19 +1,39 @@
 
+package provide sjson 1.0
+
 package require json
 package require json::write
 
 namespace eval ::sjson {
 
-  namespace export encode encode-list encode-val decode
+  namespace export encode encode-list encode-value decode
 
-  # @param value dict
+  # @param cmd <dict|list|value>
   # @param args -tpl tpl or -type type
-  proc encode {value args} {
-    tcl2json $value {*}$args -type dict
+  proc encode {cmd value args} {
+    switch $cmd {
+      dict {
+        encode-dict $value {*}$args
+      }
+      list {
+        encode-list $value {*}$args
+      }
+      value {
+        encode-value $value {*}$args
+      }
+      default {
+        return -code error "invalid command, use <dict|list|value>"
+      }
+    }
+    # tcl2json $value {*}$args
   }
 
-  proc encode-val {value args} {
+  proc encode-value {value args} {
     tcl2json $value {*}$args
+  }
+
+  proc encode-dict {value args} {
+    tcl2json $value {*}$args -type dict
   }
 
   proc encode-list {value args} {

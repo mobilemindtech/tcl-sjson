@@ -3,9 +3,9 @@
 ### Doc
 
 
-* `encode {dict args}` - Encode dict or value. Use `-tpl` to set template
-* `encode-list {list args}` - Encode list. Use `-tpl` to set template
-* `encode-val {value args}` - Encode list. Use `-type` to set type
+* `encode dict {dict args}` - Encode dict or value. Use `-tpl` to set template
+* `encode list {list args}` - Encode list. Use `-tpl` to set template
+* `encode value {value args}` - Encode value. Use `-type` to set type
 * `decode {string}` - Decode dict or list
 
 ### Encode dict
@@ -40,7 +40,7 @@ set tpl {
     }
 }
 
-::sjson::encode $data -tpl $tpl
+::sjson::encode dict $data -tpl $tpl
 ```
 ### Encode list
 
@@ -91,17 +91,17 @@ set tpl {
     }        
 }
 
-::sjson::encode-list $data -tpl $tpl
+::sjson::encode list $data -tpl $tpl
 ```
 
 ### Encode value
 
 ````tcl
-::sjson::encode-val 1 == 1
-::sjson::encode-val "1" -type string == {"1"}
-::sjson::encode-val str == {"str"}
-::sjson::encode-val true == true
-::sjson::encode-val "true" -type string == {"true"}
+::sjson::encode value 1 == 1
+::sjson::encode value "1" -type string == {"1"}
+::sjson::encode value str == {"str"}
+::sjson::encode value true == true
+::sjson::encode value "true" -type string == {"true"}
 ```
 
 ### Decode

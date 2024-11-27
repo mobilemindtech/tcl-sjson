@@ -37,7 +37,7 @@ test json_encode {} -body {
         }
     }
 
-    encode $data -tpl $tpl
+    encode dict $data -tpl $tpl
 
 } -result {{
     "id"      : 1,
@@ -108,7 +108,7 @@ test json_encode_list {} -body {
         }        
     }
 
-    encode-list $data -tpl $tpl
+    encode list $data -tpl $tpl
 
 } -result {[{
     "id"      : 1,
@@ -151,24 +151,24 @@ test json_encode_list {} -body {
 }]}
 
 test json_encode_value_int {} -body {
-    encode-val 1
+    encode value 1
 } -result 1
 
 test json_encode_value_string {} -body {
-    encode-val str
+    encode value str
 } -result {"str"}
 
 test json_encode_value_string {} -body {
-    encode-val "1" -type string
+    encode value "1" -type string
 } -result {"1"}
 
 test json_encode_value_bool {} -body {
-    encode-val true
+    encode value true
 } -result true
 
 
 test json_encode_value_bool_str {} -body {
-    encode-val "true" -type string
+    encode value "true" -type string
 } -result {"true"}
 
 
