@@ -74,7 +74,7 @@ namespace eval ::sjson {
     switch -regexp -- $type {
       dict {
 
-        set mapResult {}
+        set result {}
 
         if {[llength $tpl] > 0} {
           dict for {k v} $value {
@@ -86,16 +86,16 @@ namespace eval ::sjson {
 
             if {[llength $type] > 1} {
               set typ [lindex $type 0]
-              dict set mapResult $k [tcl2json $v -type $typ -tpl [lindex $type 1]]
+              dict set result $k [tcl2json $v -type $typ -tpl [lindex $type 1]]
             } else {
-              dict set mapResult $k [tcl2json $v -type $type]
+              dict set result $k [tcl2json $v -type $type]
             }
           }          
         } else {
-          set mapResult [dict map {k v} $value {tcl2json $v}]
+          set result [dict map {k v} $value {tcl2json $v}]
         }
 
-        return [json::write object {*}$mapResult]
+        return [json::write object {*}$result]
       }
       list {
         set args {}
